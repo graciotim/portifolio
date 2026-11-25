@@ -104,7 +104,18 @@
               <tr><td>docker</td><td><span class="meter" style="--w:80%"></span></td></tr>
             </tbody>
           </table>
-          <p class="editor__meta" data-i18n="term.meta">4 linhas · 0,003s</p>
+          <p class="editor__meta editor__meta--row">
+            <span data-i18n="term.meta">4 linhas · 0,003s</span>
+            <button class="repl__hint" id="replHint" type="button"><kbd>/</kbd> <span data-i18n="repl.hint">para digitar uma query</span></button>
+          </p>
+        </div>
+        <!-- Easter egg: terminal interativo -->
+        <div class="repl" id="repl" hidden>
+          <div class="repl__out" id="replOut" aria-live="polite"></div>
+          <label class="repl__prompt">
+            <span class="k" aria-hidden="true">sql&gt;</span>
+            <input class="repl__input" id="replInput" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="send" data-i18n-attr="aria-label:repl.label;placeholder:repl.ph" aria-label="Terminal SQL" placeholder="digite help" />
+          </label>
         </div>
       </div>
     </section>

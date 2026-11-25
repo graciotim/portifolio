@@ -125,6 +125,7 @@ function createTerminal({ code, result, build, delay = 600, speed = [24, 36], on
   }
 
   return {
+    get done() { return done; },
     rebuild() { tokens = build(); if (done) render(length()); },
     start() {
       if (started) return;
@@ -193,6 +194,143 @@ document.querySelectorAll("[data-term]").forEach((el) => {
   el._term = term;
   terminals.push(term);
   termIO.observe(el);
+});
+
+// ================= Easter egg: terminal interativo =================
+// Aperte "/" (ou clique no terminal do topo) e digite SQL. Tente um DROP TABLE.
+const repl = document.getElementById("repl");
+const replOut = document.getElementById("replOut");
+const replInput = document.getElementById("replInput");
+const heroResult = document.getElementById("termResult");
+const fmt = (key, vars) => t(key).replace(/\{(\w+)\}/g, (_, k) => vars[k]);
+const replHistory = [];
+let histPos = 0;
+
+const TABLES = {
+  skills: ["skills", "habilidades", "joao_graciotim", "stack"],
+  projects: ["projetos", "projects", "proyectos"],
+  contact: ["contato", "contact", "contacto"],
+  coffee: ["cafe", "café", "coffee"],
+};
+const findTable = (name) => Object.keys(TABLES).find((k) => TABLES[k].includes(name));
+
+function print(html, cls = "") {
+  const line = document.createElement("div");
+  if (cls) line.className = cls;
+  line.innerHTML = html;
+  replOut.append(line);
+  replOut.scrollTop = replOut.scrollHeight;
+}
+const printText = (text, cls) => print(esc(text), cls);
+
+function printTable(head, rows) {
+  const th = head.map((h) => `<th>${esc(h)}</th>`).join("");
+  const tr = rows.map((r) => `<tr>${r.map((c) => `<td>${c}</td>`).join("")}</tr>`).join("");
+  print(`<table><thead><tr>${th}</tr></thead><tbody>${tr}</tbody></table>`);
+  printText(fmt("repl.rows", { n: rows.length }), "muted");
+}
+
+function selectFrom(table) {
+  if (table === "skills") {
+    const rows = [...heroResult.querySelectorAll("tbody tr")].map((tr) => [
+      esc(tr.cells[0].textContent),
+      tr.cells[1].innerHTML,
+    ]);
+    printTable([t("term.col1"), t("term.col2")], rows);
+  } else if (table === "projects") {
+    const rows = [...document.querySelectorAll(".project:not(.project--cta)")].map((p) => [
+      esc(p.querySelector(".subheading").textContent),
+      esc(p.querySelector(".project__meta .caption:last-child").textContent),
+    ]);
+    printTable([t("repl.colTitle"), t("repl.colYear")], rows);
+  } else if (table === "contact") {
+    const email = document.getElementById("copyEmail").dataset.email;
+    printTable(["canal", "valor"], [
+      ["email", esc(email)],
+      ["linkedin", "linkedin.com/in/joaograciotim"],
+      ["github", "github.com/devgraciotim"],
+    ]);
+    navigator.clipboard?.writeText(email).then(() => showToast(t("repl.copied")), () => {});
+  } else if (table === "coffee") {
+    printText(t("repl.coffee"), "err");
+  }
+}
+
+function dropTable(name) {
+  const editor = repl.closest(".editor");
+  heroResult.classList.add("is-dropping");
+  editor.classList.remove("is-shaking");
+  void editor.offsetWidth; // reinicia a animação se rodar duas vezes seguidas
+  editor.classList.add("is-shaking");
+  setTimeout(() => printText(fmt("repl.drop", { t: name }), "err"), 450);
+  setTimeout(() => {
+    heroResult.classList.remove("is-dropping");
+    editor.classList.remove("is-shaking");
+  }, 1400);
+}
+
+function run(raw) {
+  const q = raw.trim().replace(/;+\s*$/, "");
+  if (!q) return;
+  print(`<span class="k">sql&gt;</span> ${esc(raw.trim())}`, "echo");
+  const low = q.toLowerCase().replace(/\s+/g, " ");
+  let m;
+
+  if (["help", "\\?", "\\h", "\\dt", "\\d"].includes(low)) printText(t("repl.help"), "muted");
+  else if (["clear", "cls", "\\! clear"].includes(low)) replOut.innerHTML = "";
+  else if (["exit", "quit", "\\q"].includes(low)) { printText(t("repl.bye"), "muted"); setTimeout(closeRepl, 600); }
+  else if ((m = low.match(/^drop (?:table|database|schema) (?:if exists )?([^\s;]+)/))) dropTable(m[1].replace(/"/g, ""));
+  else if ((m = low.match(/^(drop|delete|truncate|update|insert|alter|create)\b/))) printText(fmt("repl.readonly", { w: m[1].toUpperCase() }), "err");
+  else if ((m = low.match(/^select .+? from ([^\s;]+)/))) {
+    const name = m[1].replace(/"/g, "");
+    const table = findTable(name);
+    table ? selectFrom(table) : printText(fmt("repl.notable", { t: name }), "err");
+  } else printText(fmt("repl.syntax", { w: q.split(" ")[0] }), "err");
+}
+
+function openRepl() {
+  if (!heroTerm.done) return;
+  const editor = repl.closest(".editor");
+  if (repl.hidden) {
+    repl.hidden = false;
+    editor.classList.add("is-repl");
+    if (!replOut.childElementCount) printText(t("repl.welcome"), "muted");
+  }
+  const r = editor.getBoundingClientRect();
+  if (r.top < 0 || r.bottom > innerHeight) editor.scrollIntoView({ block: "center", behavior: reduceMotion ? "auto" : "smooth" });
+  replInput.focus({ preventScroll: true });
+}
+function closeRepl() {
+  repl.hidden = true;
+  repl.closest(".editor").classList.remove("is-repl");
+  replInput.blur();
+}
+
+replInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    const v = replInput.value;
+    if (v.trim()) { replHistory.push(v); histPos = replHistory.length; }
+    replInput.value = "";
+    run(v);
+  } else if (e.key === "ArrowUp" && replHistory.length) {
+    e.preventDefault();
+    histPos = Math.max(0, histPos - 1);
+    replInput.value = replHistory[histPos];
+  } else if (e.key === "ArrowDown" && replHistory.length) {
+    e.preventDefault();
+    histPos = Math.min(replHistory.length, histPos + 1);
+    replInput.value = replHistory[histPos] ?? "";
+  } else if (e.key === "Escape") closeRepl();
+});
+document.getElementById("replHint").addEventListener("click", openRepl);
+document.querySelector(".hero .editor").addEventListener("click", (e) => {
+  if (!e.target.closest("button, a, input")) openRepl();
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "/" || e.ctrlKey || e.metaKey || e.altKey) return;
+  if (e.target.closest("input, textarea, select, [contenteditable]")) return;
+  e.preventDefault();
+  openRepl();
 });
 
 // ================= Nav =================
