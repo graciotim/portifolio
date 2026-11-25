@@ -329,6 +329,12 @@ ul, ol { list-style: none; margin: 0; padding: 0; }
 @keyframes fade { from { opacity: 0; } }
 .editor__meta { margin-top: 12px; color: var(--color-smoke); }
 
+/* Terminais das seções (Stack / Projetos) */
+.editor.editor--section { max-width: 760px; margin: 0 0 var(--s-48); }
+.editor--section .editor__body { min-height: 0; }
+.editor__result--meta { padding: 12px var(--s-24); }
+.editor__result--meta .editor__meta { margin-top: 0; }
+
 /* ================= Logo cloud ================= */
 .cloud {
   max-width: var(--page-max-width);

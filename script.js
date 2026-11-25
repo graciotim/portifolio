@@ -49,8 +49,7 @@ function applyLang(next, { save = false } = {}) {
     li.setAttribute("aria-selected", li.dataset.lang === next);
   });
 
-  buildQuery();
-  if (typingDone) renderQuery(queryLength());
+  terminals.forEach((term) => term.rebuild());
 }
 
 // Menu de idiomas
@@ -87,52 +86,114 @@ document.addEventListener("click", (e) => {
   if (!langMenu.hidden && !e.target.closest("#lang")) closeLangMenu();
 });
 
-// ================= Terminal digitando =================
-const typedEl = document.getElementById("typed");
-const resultEl = document.getElementById("termResult");
-let query = [];
-let typingDone = false;
-
-function buildQuery() {
-  query = [
-    ["c", t("term.comment") + "\n"],
-    ["k", "SELECT"], ["", " " + t("term.select") + "\n"],
-    ["k", "FROM"], ["", " joao_graciotim\n"],
-    ["k", "WHERE"], ["", " area = "], ["s", t("term.area")], ["", "\n"],
-    ["k", "ORDER BY"], ["", " " + t("term.order") + " "], ["k", "DESC"], ["", ";"],
-  ];
-}
-const queryLength = () => query.reduce((n, [, s]) => n + s.length, 0);
+// ================= Terminais digitando =================
 const esc = (s) => s.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
 
-function renderQuery(chars) {
-  let left = chars;
-  let html = "";
-  for (const [cls, text] of query) {
-    if (left <= 0) break;
-    const part = esc(text.slice(0, left));
-    html += cls ? `<span class="${cls}">${part}</span>` : part;
-    left -= text.length;
+// Monta os tokens de uma query: SELECT … FROM … WHERE … = '…' ORDER BY … DESC;
+const sqlTokens = ({ comment, select, from, where, val, order }) => [
+  ["c", comment + "\n"],
+  ["k", "SELECT"], ["", " " + select + "\n"],
+  ["k", "FROM"], ["", " " + from + "\n"],
+  ["k", "WHERE"], ["", ` ${where} = `], ["s", val], ["", "\n"],
+  ["k", "ORDER BY"], ["", " " + order + " "], ["k", "DESC"], ["", ";"],
+];
+
+function createTerminal({ code, result, build, delay = 600, speed = [24, 36], onDone }) {
+  let tokens = [];
+  let done = false;
+  let started = false;
+  const length = () => tokens.reduce((n, [, s]) => n + s.length, 0);
+
+  function render(chars) {
+    let left = chars;
+    let html = "";
+    for (const [cls, text] of tokens) {
+      if (left <= 0) break;
+      const part = esc(text.slice(0, left));
+      html += cls ? `<span class="${cls}">${part}</span>` : part;
+      left -= text.length;
+    }
+    code.innerHTML = html;
   }
-  typedEl.innerHTML = html;
+
+  function finish(wait) {
+    done = true;
+    setTimeout(() => {
+      result.hidden = false;
+      onDone?.();
+    }, wait);
+  }
+
+  return {
+    rebuild() { tokens = build(); if (done) render(length()); },
+    start() {
+      if (started) return;
+      started = true;
+      if (reduceMotion) { render(length()); finish(0); return; }
+      let i = 0;
+      const tick = () => {
+        render(++i);
+        if (i < length()) setTimeout(tick, speed[0] + Math.random() * speed[1]);
+        else finish(300);
+      };
+      setTimeout(tick, delay);
+    },
+  };
 }
 
-function startTyping() {
-  if (reduceMotion) {
-    typingDone = true;
-    renderQuery(queryLength());
-    resultEl.hidden = false;
-    return;
-  }
-  let i = 0;
-  const tick = () => {
-    if (typingDone) return;
-    renderQuery(++i);
-    if (i < queryLength()) setTimeout(tick, 24 + Math.random() * 36);
-    else { typingDone = true; setTimeout(() => (resultEl.hidden = false), 300); }
-  };
-  setTimeout(tick, 600);
+// Revela os elementos de um grupo (cards) em cascata, depois da query rodar.
+function openGate(name) {
+  const items = [...document.querySelectorAll(`[data-gate="${name}"]`)]
+    .flatMap((g) => (g.classList.contains("reveal") ? [g] : [...g.querySelectorAll(".reveal")]));
+  items.forEach((el, i) => {
+    const d = reduceMotion ? 0 : 150 + i * 80;
+    el.style.transitionDelay = `${d}ms`;
+    requestAnimationFrame(() => el.classList.add("is-in"));
+    setTimeout(() => (el.style.transitionDelay = ""), d + 700);
+  });
 }
+
+const heroTerm = createTerminal({
+  code: document.getElementById("typed"),
+  result: document.getElementById("termResult"),
+  build: () => sqlTokens({
+    comment: t("term.comment"), select: t("term.select"), from: "joao_graciotim",
+    where: "area", val: t("term.area"), order: t("term.order"),
+  }),
+});
+
+const sectionTerms = { stack: "qs", projects: "qp" };
+const terminals = [heroTerm];
+const termIO = new IntersectionObserver(
+  (entries) => entries.forEach((e) => {
+    if (!e.isIntersecting) return;
+    e.target._term.start();
+    termIO.unobserve(e.target);
+  }),
+  // Só dispara quando o terminal está quase inteiro na tela e acima do rodapé da viewport.
+  { threshold: 0.8, rootMargin: "0px 0px -15% 0px" }
+);
+const heroEditor = document.querySelector(".hero .editor");
+heroEditor._term = heroTerm;
+termIO.observe(heroEditor);
+document.querySelectorAll("[data-term]").forEach((el) => {
+  const name = el.dataset.term;
+  const p = sectionTerms[name];
+  const term = createTerminal({
+    code: el.querySelector(".term-code"),
+    result: el.querySelector(".editor__result"),
+    build: () => sqlTokens({
+      comment: t(`${p}.comment`), select: t(`${p}.select`), from: t(`${p}.from`),
+      where: t(`${p}.where`), val: t(`${p}.val`), order: t(`${p}.order`),
+    }),
+    delay: 400,
+    speed: [14, 24],
+    onDone: () => openGate(name),
+  });
+  el._term = term;
+  terminals.push(term);
+  termIO.observe(el);
+});
 
 // ================= Nav =================
 const nav = document.getElementById("nav");
@@ -169,7 +230,9 @@ const io = new IntersectionObserver(
   }),
   { threshold: 0.1 }
 );
+// Itens dentro de [data-gate] esperam o terminal da seção terminar a query.
 document.querySelectorAll(".reveal").forEach((el, i) => {
+  if (el.closest("[data-gate]")) return;
   el.style.transitionDelay = `${(i % 4) * 60}ms`;
   io.observe(el);
 });
@@ -234,4 +297,3 @@ form.addEventListener("submit", (e) => {
 // ================= Início =================
 document.getElementById("year").textContent = new Date().getFullYear();
 applyLang(lang);
-startTyping();

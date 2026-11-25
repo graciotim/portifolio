@@ -150,7 +150,23 @@
         <p class="body-muted" data-i18n="stack.sub">Do banco ao dashboard, passando por automação e infraestrutura.</p>
       </header>
 
-      <div class="grid grid--4">
+      <!-- Terminal: query da stack -->
+      <div class="editor editor--section reveal" data-term="stack" aria-label="SQL">
+        <div class="editor__bar">
+          <span class="editor__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="editor__file">stack.sql</span>
+          <span class="editor__run"><span class="announce__dot" aria-hidden="true"></span>postgres</span>
+        </div>
+        <div class="editor__body">
+          <ol class="editor__lines" aria-hidden="true"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ol>
+          <pre class="code"><code class="term-code"></code><span class="caret" aria-hidden="true"></span></pre>
+        </div>
+        <div class="editor__result editor__result--meta" hidden>
+          <p class="editor__meta"><span class="green" aria-hidden="true">✓</span> <span data-i18n="qs.meta">6 linhas · 0,002s</span></p>
+        </div>
+      </div>
+
+      <div class="grid grid--4" data-gate="stack">
         <article class="card feature feature--wide reveal">
           <svg class="feature__icon" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>
           <h3 class="subheading">SQL</h3>
@@ -246,7 +262,23 @@
         <p class="body-muted" data-i18n="projects.sub">Uma seleção de trabalhos com dados, integrações e automação.</p>
       </header>
 
-      <div class="filters reveal" role="group" aria-label="Filtro">
+      <!-- Terminal: query dos projetos -->
+      <div class="editor editor--section reveal" data-term="projects" aria-label="SQL">
+        <div class="editor__bar">
+          <span class="editor__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="editor__file">projetos.sql</span>
+          <span class="editor__run"><span class="announce__dot" aria-hidden="true"></span>postgres</span>
+        </div>
+        <div class="editor__body">
+          <ol class="editor__lines" aria-hidden="true"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ol>
+          <pre class="code"><code class="term-code"></code><span class="caret" aria-hidden="true"></span></pre>
+        </div>
+        <div class="editor__result editor__result--meta" hidden>
+          <p class="editor__meta"><span class="green" aria-hidden="true">✓</span> <span data-i18n="qp.meta">5 linhas · 0,004s</span></p>
+        </div>
+      </div>
+
+      <div class="filters reveal" role="group" aria-label="Filtro" data-gate="projects">
         <button class="tag-btn is-active" data-filter="all" data-i18n="filter.all">Todos</button>
         <button class="tag-btn" data-filter="sql">SQL</button>
         <button class="tag-btn" data-filter="docker">Docker</button>
@@ -254,7 +286,7 @@
         <button class="tag-btn" data-filter="bi">BI</button>
       </div>
 
-      <div class="grid grid--3">
+      <div class="grid grid--3" data-gate="projects">
         <article class="card project reveal" data-tags="api docker sql">
           <div class="visual">
             <svg viewBox="0 0 300 120" aria-hidden="true">
