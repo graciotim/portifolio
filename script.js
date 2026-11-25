@@ -248,7 +248,7 @@ function selectFrom(table) {
     printTable(["canal", "valor"], [
       ["email", esc(email)],
       ["linkedin", "linkedin.com/in/joaograciotim"],
-      ["github", "github.com/devgraciotim"],
+      ["github", "github.com/graciotim"],
     ]);
     navigator.clipboard?.writeText(email).then(() => showToast(t("repl.copied")), () => {});
   } else if (table === "coffee") {
