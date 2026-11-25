@@ -364,6 +364,7 @@ ul, ol { list-style: none; margin: 0; padding: 0; }
 .repl__out { max-height: 280px; overflow-y: auto; white-space: pre-wrap; line-height: 1.9; color: var(--color-silver-mist); }
 .repl__out > div + div { margin-top: 4px; }
 .repl__out .muted { color: var(--color-smoke); }
+.repl__out .k { color: var(--color-phosphor-green); }
 .repl__out .err { color: var(--color-snow); }
 .repl__out .echo { margin-top: 12px; color: var(--color-snow); }
 .repl__out .echo:first-child { margin-top: 0; }
@@ -379,6 +380,32 @@ ul, ol { list-style: none; margin: 0; padding: 0; }
   caret-color: var(--color-phosphor-green);
 }
 .repl__input::placeholder { color: var(--color-graphite); }
+.repl [hidden] { display: none; }
+@media (hover: none) and (pointer: coarse) { .repl__hint kbd { display: none; } }
+
+/* Easter egg: snake */
+.snake__hud { display: flex; justify-content: space-between; align-items: center; gap: var(--s-16); margin-bottom: 12px; color: var(--color-smoke); }
+.snake__close, .repl__again, .footer__snake {
+  padding: 0; background: none; border: 0;
+  font: inherit; letter-spacing: inherit;
+  cursor: pointer; transition: color .15s;
+}
+.snake__close { padding: 2px 8px; border: 1px solid var(--color-charcoal); border-radius: 4px; color: var(--color-smoke); }
+.snake__close:hover, .footer__snake:hover { color: var(--color-phosphor-green); }
+.snake__board {
+  position: relative; display: flex; justify-content: center;
+  touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;
+}
+.snake__board canvas { display: block; border: 1px solid var(--color-charcoal); border-radius: var(--radius-inputs); }
+.snake__msg {
+  position: absolute; left: 50%; top: 22%; transform: translate(-50%, -50%);
+  margin: 0; padding: 6px 14px; white-space: nowrap; pointer-events: none;
+  background: var(--color-obsidian); border: 1px solid var(--color-charcoal); border-radius: var(--radius-full);
+  color: var(--color-snow);
+}
+.repl__again { margin-top: 8px; color: var(--color-phosphor-green); }
+.repl__again:hover { color: var(--color-snow); }
+.footer__snake { font-family: var(--font-source-code-pro); font-size: var(--text-caption); letter-spacing: 0.1em; color: var(--color-graphite); }
 
 /* DROP TABLE: o terminal treme e as linhas "caem" */
 .editor.is-shaking { animation: shake .5s ease; }

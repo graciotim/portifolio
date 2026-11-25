@@ -3,6 +3,7 @@ const FLAGS = window.FLAGS;
 const LANGS = ["pt", "en", "es"];
 const HTML_LANG = { pt: "pt-BR", en: "en", es: "es" };
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const isTouch = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
 
 const store = {
   get(k) { try { return localStorage.getItem(k); } catch { return null; } },
@@ -90,12 +91,13 @@ document.addEventListener("click", (e) => {
 const esc = (s) => s.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
 
 // Monta os tokens de uma query: SELECT … FROM … WHERE … = '…' ORDER BY … DESC;
-const sqlTokens = ({ comment, select, from, where, val, order }) => [
+const sqlTokens = ({ comment, select, from, where, val, order, hint }) => [
   ["c", comment + "\n"],
   ["k", "SELECT"], ["", " " + select + "\n"],
   ["k", "FROM"], ["", " " + from + "\n"],
   ["k", "WHERE"], ["", ` ${where} = `], ["s", val], ["", "\n"],
   ["k", "ORDER BY"], ["", " " + order + " "], ["k", "DESC"], ["", ";"],
+  ...(hint ? [["", "\n"], ["c", hint]] : []),
 ];
 
 function createTerminal({ code, result, build, delay = 600, speed = [24, 36], onDone }) {
@@ -160,6 +162,7 @@ const heroTerm = createTerminal({
   build: () => sqlTokens({
     comment: t("term.comment"), select: t("term.select"), from: "joao_graciotim",
     where: "area", val: t("term.area"), order: t("term.order"),
+    hint: t(isTouch ? "term.psstTouch" : "term.psst"),
   }),
 });
 
@@ -205,6 +208,9 @@ const heroResult = document.getElementById("termResult");
 const fmt = (key, vars) => t(key).replace(/\{(\w+)\}/g, (_, k) => vars[k]);
 const replHistory = [];
 let histPos = 0;
+let errCount = 0;
+// A cada 3 erros, o HINT sugere o snake no lugar do "digite help".
+const hinted = (msg) => (++errCount % 3 === 0 ? msg.replace(/HINT:.*$/, t("repl.hintSnake")) : msg);
 
 const TABLES = {
   skills: ["skills", "habilidades", "joao_graciotim", "stack"],
@@ -281,15 +287,16 @@ function run(raw) {
   else if (["exit", "quit", "\\q"].includes(low)) { printText(t("repl.bye"), "muted"); setTimeout(closeRepl, 600); }
   else if ((m = low.match(/^drop (?:table|database|schema) (?:if exists )?([^\s;]+)/))) dropTable(m[1].replace(/"/g, ""));
   else if ((m = low.match(/^(drop|delete|truncate|update|insert|alter|create)\b/))) printText(fmt("repl.readonly", { w: m[1].toUpperCase() }), "err");
+  else if (/^(snake|play|select .+? from "?snake"?)$/.test(low)) Snake.start();
   else if ((m = low.match(/^select .+? from ([^\s;]+)/))) {
     const name = m[1].replace(/"/g, "");
     const table = findTable(name);
-    table ? selectFrom(table) : printText(fmt("repl.notable", { t: name }), "err");
-  } else printText(fmt("repl.syntax", { w: q.split(" ")[0] }), "err");
+    table ? selectFrom(table) : printText(hinted(fmt("repl.notable", { t: name })), "err");
+  } else printText(hinted(fmt("repl.syntax", { w: q.split(" ")[0] })), "err");
 }
 
-function openRepl() {
-  if (!heroTerm.done) return;
+function openRepl({ focus = true } = {}) {
+  if (!heroTerm.done || Snake.active) return;
   const editor = repl.closest(".editor");
   if (repl.hidden) {
     repl.hidden = false;
@@ -298,7 +305,7 @@ function openRepl() {
   }
   const r = editor.getBoundingClientRect();
   if (r.top < 0 || r.bottom > innerHeight) editor.scrollIntoView({ block: "center", behavior: reduceMotion ? "auto" : "smooth" });
-  replInput.focus({ preventScroll: true });
+  if (focus) replInput.focus({ preventScroll: true });
 }
 function closeRepl() {
   repl.hidden = true;
@@ -326,8 +333,16 @@ document.getElementById("replHint").addEventListener("click", openRepl);
 document.querySelector(".hero .editor").addEventListener("click", (e) => {
   if (!e.target.closest("button, a, input")) openRepl();
 });
+// Pista no rodapé: leva até o terminal e já abre o jogo.
+document.getElementById("footerSnake").addEventListener("click", () => {
+  heroTerm.start();
+  heroEditor.scrollIntoView({ block: "center", behavior: reduceMotion ? "auto" : "smooth" });
+  const go = () => (heroTerm.done ? (openRepl({ focus: false }), run("snake")) : setTimeout(go, 150));
+  go();
+});
+if (isTouch) document.querySelector("#replHint [data-i18n]").dataset.i18n = "repl.hintTouch";
 document.addEventListener("keydown", (e) => {
-  if (e.key !== "/" || e.ctrlKey || e.metaKey || e.altKey) return;
+  if (e.key !== "/"|| e.ctrlKey || e.metaKey || e.altKey) return;
   if (e.target.closest("input, textarea, select, [contenteditable]")) return;
   e.preventDefault();
   openRepl();

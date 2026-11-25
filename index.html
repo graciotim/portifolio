@@ -91,7 +91,7 @@
           <span class="editor__run"><span class="announce__dot" aria-hidden="true"></span>postgres</span>
         </div>
         <div class="editor__body">
-          <ol class="editor__lines" aria-hidden="true"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ol>
+          <ol class="editor__lines" aria-hidden="true"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ol>
           <pre class="code"><code id="typed"></code><span class="caret" aria-hidden="true"></span></pre>
         </div>
         <div class="editor__result" id="termResult" hidden>
@@ -111,6 +111,10 @@
         </div>
         <!-- Easter egg: terminal interativo -->
         <div class="repl" id="repl" hidden>
+          <div class="snake" id="snake" hidden>
+            <div class="snake__hud"><span id="snakeScore"></span><button class="snake__close" id="snakeClose" type="button" data-i18n-attr="aria-label:snake.close" aria-label="sair do jogo">esc ✕</button></div>
+            <div class="snake__board" id="snakeBoard"><canvas id="snakeCanvas" role="img" aria-label="snake"></canvas><p class="snake__msg" id="snakeMsg" aria-live="polite"></p></div>
+          </div>
           <div class="repl__out" id="replOut" aria-live="polite"></div>
           <label class="repl__prompt">
             <span class="k" aria-hidden="true">sql&gt;</span>
@@ -420,6 +424,7 @@
         <span class="logo__word">graciotim</span>
       </a>
       <p class="caption">© <span id="year"></span> João Graciotim</p>
+      <button class="footer__snake" id="footerSnake" type="button" data-i18n-attr="aria-label:footer.snake" aria-label="jogar snake">sql&gt; snake 🐍</button>
       <a href="#topo" class="caption footer__top" data-i18n="footer.top">Voltar ao topo ↑</a>
     </div>
   </footer>
@@ -427,5 +432,6 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="i18n.js"></script>
   <script src="script.js"></script>
+  <script src="snake.js"></script>
 </body>
 </html>
