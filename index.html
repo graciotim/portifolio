@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>João Graciotim · Analista de Dados</title>
-  <meta name="description" content="Portfólio de João Graciotim, Analista de Dados. SQL, Python, Docker, APIs, pipelines e dashboards." />
+  <title>João Graciotim · Data &amp; Software Engineer</title>
+  <meta name="description" content="Portfólio de João Graciotim, Data &amp; Software Engineer. SQL, Python, Docker, APIs, pipelines e dashboards." />
   <meta name="theme-color" content="#121212" />
   <link rel="alternate" hreflang="pt-BR" href="?lang=pt" />
   <link rel="alternate" hreflang="en" href="?lang=en" />
@@ -28,7 +28,7 @@
 
       <nav class="nav__links" id="navLinks" aria-label="Menu">
         <a href="#sobre" data-i18n="nav.about">Sobre</a>
-        <a href="#stack" data-i18n="nav.stack">Stack</a>
+        <a href="#stack" data-i18n="nav.stack">Atuação</a>
         <a href="#projetos" data-i18n="nav.projects">Projetos</a>
         <a href="#contato" class="nav__mobile-only" data-i18n="nav.contact">Fale comigo</a>
       </nav>
@@ -71,12 +71,14 @@
       </a>
 
       <h1 class="display">
-        <span data-i18n="hero.title1">Analista de Dados</span><br />
-        <span class="green" data-i18n="hero.title2">dados que viram decisões</span>
+        <span data-i18n="hero.title1">Construindo sistemas.</span><br />
+        <span data-i18n="hero.title2">Conectando dados.</span><br />
+        <span class="green" data-i18n="hero.title3">Resolvendo problemas.</span>
       </h1>
+      <p class="hero__role" data-i18n="hero.role">Data &amp; Software Engineer</p>
       <p class="hero__sub" data-i18n="hero.sub">
-        Sou o João Graciotim. Escrevo SQL limpo e performático, construo pipelines em containers,
-        integro sistemas via APIs e entrego dashboards que as pessoas realmente usam.
+        Desenvolvo soluções que conectam dados, sistemas e negócios. Da arquitetura de dados à automação
+        de processos, construo tecnologias para tornar operações mais eficientes e confiáveis.
       </p>
       <div class="hero__actions">
         <a href="#projetos" class="btn btn--primary" data-i18n="hero.cta1">Ver projetos</a>
@@ -124,19 +126,33 @@
       </div>
     </section>
 
-    <!-- ================= LOGO CLOUD ================= -->
-    <section class="cloud" aria-labelledby="cloudTitle">
-      <p class="caption" id="cloudTitle" data-i18n="tools.caption">Ferramentas do dia a dia</p>
-      <ul class="cloud__list">
-        <li><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>PostgreSQL</li>
-        <li><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v16"/></svg>SQL Server</li>
-        <li><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="10" rx="5"/></svg>Oracle</li>
-        <li><svg viewBox="0 0 24 24"><path d="M4 6c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3zM4 6v12c0 1.7 3.6 3 8 3M20 6v5M15 15l2 2 4-4"/></svg>MySQL</li>
-        <li><svg viewBox="0 0 24 24"><path d="M12 3c-4 0-4 1.8-4 4v2h4v1H6c-2 0-3 1.5-3 4.5S4 19 6 19h2v-3c0-2 1.5-3 3.5-3h4c1.5 0 2.5-1 2.5-2.5V7c0-2.2-1-4-6-4z"/><circle cx="10.5" cy="6" r=".8"/></svg>Python</li>
-        <li><svg viewBox="0 0 24 24"><path d="M2 13h17c1 0 2.5-.5 3-2-1-.5-2-.3-2.5 0-.3-1-1-1.7-1.8-2-.6.8-.7 1.8-.4 2.5M2 13c0 4 3 7 8 7 5.5 0 8-3 9-7"/><path d="M5 10h3v3H5zM8.5 10h3v3h-3zM12 10h3v3h-3zM8.5 6.5h3v3h-3z"/></svg>Docker</li>
-        <li><svg viewBox="0 0 24 24"><rect x="3" y="12" width="4" height="8" rx="1"/><rect x="10" y="7" width="4" height="13" rx="1"/><rect x="17" y="3" width="4" height="17" rx="1"/></svg>Power BI</li>
-        <li><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="9" r="2.5"/><path d="M6 8.5v7M18 11.5c0 4-5 3-10 5"/></svg>Git</li>
-      </ul>
+    <!-- ================= IMPACTO ================= -->
+    <section class="section section--impact" id="impacto">
+      <header class="section__head reveal">
+        <p class="caption" data-i18n="impact.label">Impacto</p>
+        <h2 class="heading" data-i18n-html="impact.title">Resultados que <span class="green">aparecem nos números</span></h2>
+        <p class="body-muted" data-i18n="impact.sub">O que o meu trabalho entrega em produção, todos os dias.</p>
+      </header>
+      <div class="metrics">
+        <article class="card metric reveal">
+          <svg class="feature__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h6l3 5h9M3 17h6l3-5"/><circle cx="3" cy="7" r="1"/><circle cx="3" cy="17" r="1"/><path d="m18 9 3 3-3 3"/></svg>
+          <p class="metric__value"><span data-count="30">30</span><span class="green">+</span></p>
+          <h3 class="subheading" data-i18n="impact.c1">Pipelines em produção</h3>
+          <p class="body-sm" data-i18n="impact.c1D">Integrações e rotinas de dados rodando de forma automatizada e monitorada.</p>
+        </article>
+        <article class="card metric reveal">
+          <svg class="feature__icon" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>
+          <p class="metric__value"><span data-count="250">250</span><span class="green">M+</span></p>
+          <h3 class="subheading" data-i18n="impact.c2">Registros processados por dia</h3>
+          <p class="body-sm" data-i18n="impact.c2D">Mais de 250 milhões de linhas tratadas diariamente, com performance e confiabilidade.</p>
+        </article>
+        <article class="card metric reveal">
+          <svg class="feature__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <p class="metric__value"><span data-count="300">300</span><span class="green">h+</span></p>
+          <h3 class="subheading" data-i18n="impact.c3">Horas economizadas por mês</h3>
+          <p class="body-sm" data-i18n="impact.c3D">Processos manuais substituídos por automação, liberando o time para o que importa.</p>
+        </article>
+      </div>
     </section>
 
     <!-- ================= SOBRE ================= -->
@@ -144,116 +160,36 @@
       <div class="about">
         <div class="reveal">
           <p class="caption" data-i18n="about.label">Sobre</p>
-          <h2 class="heading" data-i18n-html="about.title">Do JSON bagunçado ao <span class="green">gráfico que todo mundo entende</span>.</h2>
-          <p class="body-muted" data-i18n="about.p1">Gosto de cuidar do caminho inteiro do dado. No dia a dia escrevo consultas SQL complexas (CTEs, window functions, tuning de performance), construo integrações entre sistemas via APIs e empacoto tudo com Docker para rodar igual na minha máquina e em produção.</p>
-          <p class="body-muted" data-i18n="about.p2">Para mim, dado bom é dado confiável, documentado e fácil de usar. Por isso me preocupo tanto com a modelagem e a qualidade quanto com o dashboard final.</p>
+          <h2 class="heading" data-i18n-html="about.title">Da engenharia de dados à <span class="green">construção de soluções tecnológicas</span>.</h2>
+          <p class="body-muted" data-i18n="about.p1">Sou João Graciotim, profissional de tecnologia com atuação em engenharia de dados, desenvolvimento de software, automação e integração de sistemas.</p>
+          <p class="body-muted" data-i18n="about.p2">Minha experiência está concentrada na construção de soluções que conectam diferentes tecnologias, estruturam grandes volumes de informação e eliminam processos operacionais repetitivos.</p>
+          <p class="body-muted" data-i18n="about.p3">Ao longo da minha trajetória, trabalhei desde a modelagem e arquitetura de dados até o desenvolvimento de pipelines, integrações via APIs e automações executadas em ambientes containerizados.</p>
         </div>
         <dl class="card facts reveal">
-          <div><dt data-i18n="facts.role">Cargo</dt><dd data-i18n="facts.roleV">Analista de Dados</dd></div>
-          <div><dt data-i18n="facts.focus">Foco</dt><dd data-i18n="facts.focusV">SQL · Pipelines · BI</dd></div>
-          <div><dt data-i18n="facts.base">Base</dt><dd data-i18n="facts.baseV">Brasil</dd></div>
-          <div><dt data-i18n="facts.db">Bancos</dt><dd>PostgreSQL · SQL Server · Oracle · MySQL</dd></div>
+          <div><dt data-i18n="facts.base">Localização</dt><dd data-i18n="facts.baseV">Brasil</dd></div>
+          <div><dt data-i18n="facts.edu">Formação</dt><dd data-i18n="facts.eduV">Análise e Desenvolvimento de Sistemas</dd></div>
+          <div><dt data-i18n="facts.role">Atuação atual</dt><dd data-i18n="facts.roleV">Analista de Dados</dd></div>
+          <div><dt data-i18n="facts.focus">Foco profissional</dt><dd data-i18n="facts.focusV">Data &amp; Software Engineering</dd></div>
         </dl>
       </div>
     </section>
 
-    <!-- ================= STACK ================= -->
+    <!-- ================= ATUAÇÃO ================= -->
     <section class="section" id="stack">
       <header class="section__head reveal">
-        <p class="caption" data-i18n="stack.label">Stack</p>
-        <h2 class="heading" data-i18n-html="stack.title">Ferramentas que eu uso <span class="green">todos os dias</span></h2>
-        <p class="body-muted" data-i18n="stack.sub">Do banco ao dashboard, passando por automação e infraestrutura.</p>
+        <p class="caption" data-i18n="stack.label">Áreas de atuação</p>
+        <h2 class="heading" data-i18n-html="stack.title">Cinco frentes, <span class="green">um fluxo só</span></h2>
+        <p class="body-muted" data-i18n="stack.sub">Do dado bruto ao sistema em produção, cada área se conecta com a próxima.</p>
       </header>
 
-      <!-- Terminal: query da stack -->
-      <div class="editor editor--section reveal" data-term="stack" aria-label="SQL">
-        <div class="editor__bar">
-          <span class="editor__dots" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span class="editor__file">stack.sql</span>
-          <span class="editor__run"><span class="announce__dot" aria-hidden="true"></span>postgres</span>
-        </div>
-        <div class="editor__body">
-          <ol class="editor__lines" aria-hidden="true"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ol>
-          <pre class="code"><code class="term-code"></code><span class="caret" aria-hidden="true"></span></pre>
-        </div>
-        <div class="editor__result editor__result--meta" hidden>
-          <p class="editor__meta"><span class="green" aria-hidden="true">✓</span> <span data-i18n="qs.meta">6 linhas · 0,002s</span></p>
-        </div>
-      </div>
-
-      <div class="grid grid--4" data-gate="stack">
-        <article class="card feature feature--wide reveal">
-          <svg class="feature__icon" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>
-          <h3 class="subheading">SQL</h3>
-          <p class="body-sm" data-i18n="sql.d">Minha língua principal. Consultas analíticas, CTEs, window functions, procedures, índices e otimização de queries lentas.</p>
-          <div class="visual visual--code">
-<pre class="code"><code><span class="k">WITH</span> receita <span class="k">AS</span> (
-  <span class="k">SELECT</span> mes, <span class="f">SUM</span>(valor) <span class="k">AS</span> total
-  <span class="k">FROM</span> vendas <span class="k">GROUP BY</span> mes
-)
-<span class="k">SELECT</span> mes, total,
-  <span class="f">LAG</span>(total) <span class="k">OVER</span> (<span class="k">ORDER BY</span> mes) <span class="k">AS</span> anterior
-<span class="k">FROM</span> receita;</code></pre>
+      <div class="grid grid--cats">
+        <article class="card feature cat cat--wide reveal">
+          <div class="cat__head">
+            <svg class="feature__icon" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>
+            <span class="cat__num">01</span>
           </div>
-          <ul class="tags"><li>PostgreSQL</li><li>SQL Server</li><li>Oracle</li><li>MySQL</li></ul>
-        </article>
-
-        <article class="card feature reveal">
-          <svg class="feature__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8 12 3 3 8v8l9 5 9-5zM3 8l9 5 9-5M12 13v8"/></svg>
-          <h3 class="subheading">Docker</h3>
-          <p class="body-sm" data-i18n="docker.d">Ambientes reproduzíveis e docker-compose para bancos, pipelines e serviços.</p>
-          <div class="visual">
-            <svg viewBox="0 0 200 110" aria-hidden="true">
-              <g class="ln"><path d="M100 20 140 40 100 60 60 40Z"/><path d="M60 40v28l40 20 40-20V40M100 60v28"/><path d="M100 8v12M40 32l20 8M160 32l-20 8"/></g>
-              <circle class="dot" cx="100" cy="60" r="3"/>
-            </svg>
-          </div>
-          <ul class="tags"><li>Compose</li><li>Images</li><li>Volumes</li></ul>
-        </article>
-
-        <article class="card feature reveal">
-          <svg class="feature__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg>
-          <h3 class="subheading">APIs</h3>
-          <p class="body-sm" data-i18n="api.d">Consumo e criação de APIs REST, autenticação, paginação e integração entre sistemas.</p>
-          <div class="visual">
-            <svg viewBox="0 0 200 110" aria-hidden="true">
-              <g class="ln"><circle cx="40" cy="55" r="14"/><circle cx="160" cy="30" r="10"/><circle cx="160" cy="80" r="10"/><circle cx="100" cy="55" r="18"/><path d="M54 55h28M116 47l35-12M116 63l35 12"/></g>
-              <circle class="dot" cx="100" cy="55" r="3"/>
-            </svg>
-          </div>
-          <ul class="tags"><li>REST</li><li>JSON</li><li>OAuth</li><li>Webhooks</li></ul>
-        </article>
-
-        <article class="card feature reveal">
-          <svg class="feature__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m4 17 6-6-6-6M12 19h8"/></svg>
-          <h3 class="subheading">Python</h3>
-          <p class="body-sm" data-i18n="py.d">Automação, ETL e análise com pandas. Scripts que fazem o trabalho repetitivo por mim.</p>
-          <div class="visual">
-            <svg viewBox="0 0 200 110" aria-hidden="true">
-              <g class="ln"><rect x="30" y="22" width="140" height="66" rx="6"/><path d="M30 36h140M44 52l10 8-10 8M62 68h30"/></g>
-              <circle class="dot" cx="40" cy="29" r="2.5"/>
-            </svg>
-          </div>
-          <ul class="tags"><li>pandas</li><li>requests</li><li>SQLAlchemy</li></ul>
-        </article>
-
-        <article class="card feature reveal">
-          <svg class="feature__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3v18h18M8 16v-4M13 16V8M18 16v-7"/></svg>
-          <h3 class="subheading" data-i18n="bi.t">BI &amp; Visualização</h3>
-          <p class="body-sm" data-i18n="bi.d">Dashboards claros, com métricas bem definidas e foco em quem vai usar.</p>
-          <div class="visual">
-            <svg viewBox="0 0 200 110" aria-hidden="true">
-              <g class="ln"><path d="M30 90h140"/><rect x="40" y="62" width="16" height="28" rx="2"/><rect x="66" y="50" width="16" height="40" rx="2"/><rect x="92" y="56" width="16" height="34" rx="2"/><rect x="118" y="38" width="16" height="52" rx="2"/><rect x="144" y="24" width="16" height="66" rx="2"/><path d="M48 54 74 42l26 6 26-18 26-14"/></g>
-              <circle class="dot" cx="152" cy="16" r="3"/>
-            </svg>
-          </div>
-          <ul class="tags"><li>Power BI</li><li>DAX</li><li>Storytelling</li></ul>
-        </article>
-
-        <article class="card feature feature--wide reveal">
-          <svg class="feature__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h11M4 7l3-3M4 7l3 3M20 17H9M20 17l-3-3M20 17l-3 3"/></svg>
-          <h3 class="subheading" data-i18n="eng.t">Engenharia de dados</h3>
-          <p class="body-sm" data-i18n="eng.d">Pipelines ETL/ELT, modelagem dimensional, versionamento e boas práticas de qualidade.</p>
+          <h3 class="subheading">Data Engineering</h3>
+          <p class="body-sm" data-i18n="cat.de">Construção de pipelines ETL/ELT, modelagem dimensional, integração de fontes, qualidade de dados e otimização de consultas.</p>
           <div class="visual">
             <svg viewBox="0 0 420 110" aria-hidden="true">
               <g class="ln">
@@ -264,7 +200,72 @@
               <circle class="dot" cx="350" cy="55" r="3"/>
             </svg>
           </div>
-          <ul class="tags"><li>ETL / ELT</li><li>Star schema</li><li>Git</li></ul>
+          <ul class="tags"><li>SQL</li><li>Python</li><li>PostgreSQL</li><li>SQL Server</li><li>Data Modeling</li></ul>
+        </article>
+
+        <article class="card feature cat cat--wide reveal">
+          <div class="cat__head">
+            <svg class="feature__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg>
+            <span class="cat__num">02</span>
+          </div>
+          <h3 class="subheading">Software Development</h3>
+          <p class="body-sm" data-i18n="cat.sd">Desenvolvimento de aplicações, scripts, serviços backend e componentes para integração entre sistemas.</p>
+          <div class="visual visual--code">
+<pre class="code"><code><span class="k">@app</span>.post(<span class="s">"/sync"</span>)
+<span class="k">def</span> <span class="f">sync</span>(payload: dict):
+    rows = api.get(<span class="s">"/orders"</span>)
+    db.bulk_insert(rows)
+    <span class="k">return</span> {<span class="s">"ok"</span>: <span class="k">True</span>}</code></pre>
+          </div>
+          <ul class="tags"><li>Python</li><li>REST APIs</li><li>JSON</li><li>Git</li><li>SQLAlchemy</li></ul>
+        </article>
+
+        <article class="card feature cat reveal">
+          <div class="cat__head">
+            <svg class="feature__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h11M4 7l3-3M4 7l3 3M20 17H9M20 17l-3-3M20 17l-3 3"/></svg>
+            <span class="cat__num">03</span>
+          </div>
+          <h3 class="subheading">Automation &amp; Integration</h3>
+          <p class="body-sm" data-i18n="cat.ai">Automatização de processos, comunicação entre plataformas, sincronização de dados e execução de workflows.</p>
+          <div class="visual">
+            <svg viewBox="0 0 200 110" aria-hidden="true">
+              <g class="ln"><circle cx="40" cy="55" r="14"/><circle cx="160" cy="30" r="10"/><circle cx="160" cy="80" r="10"/><circle cx="100" cy="55" r="18"/><path d="M54 55h28M116 47l35-12M116 63l35 12"/></g>
+              <circle class="dot" cx="100" cy="55" r="3"/>
+            </svg>
+          </div>
+          <ul class="tags"><li>n8n</li><li>APIs</li><li>Webhooks</li><li>Python</li><li>SQL</li></ul>
+        </article>
+
+        <article class="card feature cat reveal">
+          <div class="cat__head">
+            <svg class="feature__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8 12 3 3 8v8l9 5 9-5zM3 8l9 5 9-5M12 13v8"/></svg>
+            <span class="cat__num">04</span>
+          </div>
+          <h3 class="subheading">Infrastructure &amp; DevOps</h3>
+          <p class="body-sm" data-i18n="cat.in">Containerização, configuração de ambientes, execução de serviços e organização de aplicações para produção.</p>
+          <div class="visual">
+            <svg viewBox="0 0 200 110" aria-hidden="true">
+              <g class="ln"><path d="M100 20 140 40 100 60 60 40Z"/><path d="M60 40v28l40 20 40-20V40M100 60v28"/><path d="M100 8v12M40 32l20 8M160 32l-20 8"/></g>
+              <circle class="dot" cx="100" cy="60" r="3"/>
+            </svg>
+          </div>
+          <ul class="tags"><li>Docker</li><li>Linux</li><li>Docker Compose</li><li>Git</li></ul>
+        </article>
+
+        <article class="card feature cat reveal">
+          <div class="cat__head">
+            <svg class="feature__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3v18h18M8 16v-4M13 16V8M18 16v-7"/></svg>
+            <span class="cat__num">05</span>
+          </div>
+          <h3 class="subheading">Business Intelligence</h3>
+          <p class="body-sm" data-i18n="cat.bi">Construção de modelos analíticos, dashboards, indicadores e estruturas que apoiam decisões de negócio.</p>
+          <div class="visual">
+            <svg viewBox="0 0 200 110" aria-hidden="true">
+              <g class="ln"><path d="M30 90h140"/><rect x="40" y="62" width="16" height="28" rx="2"/><rect x="66" y="50" width="16" height="40" rx="2"/><rect x="92" y="56" width="16" height="34" rx="2"/><rect x="118" y="38" width="16" height="52" rx="2"/><rect x="144" y="24" width="16" height="66" rx="2"/><path d="M48 54 74 42l26 6 26-18 26-14"/></g>
+              <circle class="dot" cx="152" cy="16" r="3"/>
+            </svg>
+          </div>
+          <ul class="tags"><li>Power BI</li><li>DAX</li><li>SQL</li><li>Data Visualization</li></ul>
         </article>
       </div>
     </section>
@@ -277,23 +278,7 @@
         <p class="body-muted" data-i18n="projects.sub">Uma seleção de trabalhos com dados, integrações e automação.</p>
       </header>
 
-      <!-- Terminal: query dos projetos -->
-      <div class="editor editor--section reveal" data-term="projects" aria-label="SQL">
-        <div class="editor__bar">
-          <span class="editor__dots" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span class="editor__file">projetos.sql</span>
-          <span class="editor__run"><span class="announce__dot" aria-hidden="true"></span>postgres</span>
-        </div>
-        <div class="editor__body">
-          <ol class="editor__lines" aria-hidden="true"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ol>
-          <pre class="code"><code class="term-code"></code><span class="caret" aria-hidden="true"></span></pre>
-        </div>
-        <div class="editor__result editor__result--meta" hidden>
-          <p class="editor__meta"><span class="green" aria-hidden="true">✓</span> <span data-i18n="qp.meta">5 linhas · 0,004s</span></p>
-        </div>
-      </div>
-
-      <div class="filters reveal" role="group" aria-label="Filtro" data-gate="projects">
+      <div class="filters reveal" role="group" aria-label="Filtro">
         <button class="tag-btn is-active" data-filter="all" data-i18n="filter.all">Todos</button>
         <button class="tag-btn" data-filter="sql">SQL</button>
         <button class="tag-btn" data-filter="docker">Docker</button>
@@ -301,7 +286,7 @@
         <button class="tag-btn" data-filter="bi">BI</button>
       </div>
 
-      <div class="grid grid--3" data-gate="projects">
+      <div class="grid grid--3">
         <article class="card project reveal" data-tags="api docker sql">
           <div class="visual">
             <svg viewBox="0 0 300 120" aria-hidden="true">
@@ -383,7 +368,7 @@
     <section class="section contact" id="contato">
       <div class="contact__text reveal">
         <p class="caption" data-i18n="contact.label">Contato</p>
-        <h2 class="heading" data-i18n-html="contact.title">Vamos fazer seus dados <span class="green">trabalharem por você</span></h2>
+        <h2 class="heading" data-i18n-html="contact.title">Tem um desafio <span class="green">em mente?</span></h2>
         <p class="body-muted" data-i18n="contact.sub">Aberto a oportunidades, freelas e boas conversas sobre dados. Respondo rápido.</p>
         <ul class="contact__list">
           <li>

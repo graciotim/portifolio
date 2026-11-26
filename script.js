@@ -100,7 +100,8 @@ const sqlTokens = ({ comment, select, from, where, val, order, hint }) => [
   ...(hint ? [["", "\n"], ["c", hint]] : []),
 ];
 
-function createTerminal({ code, result, build, delay = 600, speed = [24, 36], onDone }) {
+// duration: tempo total (ms) pra digitar a query inteira, independente do idioma/tamanho.
+function createTerminal({ code, result, build, delay = 400, duration = 2600, onDone }) {
   let tokens = [];
   let done = false;
   let started = false;
@@ -133,27 +134,22 @@ function createTerminal({ code, result, build, delay = 600, speed = [24, 36], on
       if (started) return;
       started = true;
       if (reduceMotion) { render(length()); finish(0); return; }
-      let i = 0;
-      const tick = () => {
-        render(++i);
-        if (i < length()) setTimeout(tick, speed[0] + Math.random() * speed[1]);
-        else finish(300);
+      // Digita por tempo (rAF), não por caractere: rápido e com um leve ritmo irregular.
+      let t0 = 0;
+      let shown = 0;
+      const tick = (now) => {
+        t0 ||= now;
+        const p = Math.min(1, (now - t0) / duration);
+        const target = Math.ceil(length() * p);
+        // Avança em rajadas de 1–3 chars pra parecer digitação, sem nunca passar do alvo.
+        shown = Math.min(target, Math.max(shown + 1, target - Math.floor(Math.random() * 3)));
+        render(shown);
+        if (shown < length()) requestAnimationFrame(tick);
+        else finish(220);
       };
-      setTimeout(tick, delay);
+      setTimeout(() => requestAnimationFrame(tick), delay);
     },
   };
-}
-
-// Revela os elementos de um grupo (cards) em cascata, depois da query rodar.
-function openGate(name) {
-  const items = [...document.querySelectorAll(`[data-gate="${name}"]`)]
-    .flatMap((g) => (g.classList.contains("reveal") ? [g] : [...g.querySelectorAll(".reveal")]));
-  items.forEach((el, i) => {
-    const d = reduceMotion ? 0 : 150 + i * 80;
-    el.style.transitionDelay = `${d}ms`;
-    requestAnimationFrame(() => el.classList.add("is-in"));
-    setTimeout(() => (el.style.transitionDelay = ""), d + 700);
-  });
 }
 
 const heroTerm = createTerminal({
@@ -166,7 +162,6 @@ const heroTerm = createTerminal({
   }),
 });
 
-const sectionTerms = { stack: "qs", projects: "qp" };
 const terminals = [heroTerm];
 const termIO = new IntersectionObserver(
   (entries) => entries.forEach((e) => {
@@ -175,29 +170,11 @@ const termIO = new IntersectionObserver(
     termIO.unobserve(e.target);
   }),
   // Só dispara quando o terminal está quase inteiro na tela e acima do rodapé da viewport.
-  { threshold: 0.8, rootMargin: "0px 0px -15% 0px" }
+  { threshold: 0.5, rootMargin: "0px 0px -10% 0px" }
 );
 const heroEditor = document.querySelector(".hero .editor");
 heroEditor._term = heroTerm;
 termIO.observe(heroEditor);
-document.querySelectorAll("[data-term]").forEach((el) => {
-  const name = el.dataset.term;
-  const p = sectionTerms[name];
-  const term = createTerminal({
-    code: el.querySelector(".term-code"),
-    result: el.querySelector(".editor__result"),
-    build: () => sqlTokens({
-      comment: t(`${p}.comment`), select: t(`${p}.select`), from: t(`${p}.from`),
-      where: t(`${p}.where`), val: t(`${p}.val`), order: t(`${p}.order`),
-    }),
-    delay: 400,
-    speed: [14, 24],
-    onDone: () => openGate(name),
-  });
-  el._term = term;
-  terminals.push(term);
-  termIO.observe(el);
-});
 
 // ================= Easter egg: terminal interativo =================
 // Aperte "/" (ou clique no terminal do topo) e digite SQL. Tente um DROP TABLE.
@@ -383,12 +360,31 @@ const io = new IntersectionObserver(
   }),
   { threshold: 0.1 }
 );
-// Itens dentro de [data-gate] esperam o terminal da seção terminar a query.
 document.querySelectorAll(".reveal").forEach((el, i) => {
-  if (el.closest("[data-gate]")) return;
-  el.style.transitionDelay = `${(i % 4) * 60}ms`;
+  el.style.transitionDelay = `${(i % 4) * 40}ms`;
   io.observe(el);
 });
+
+// ================= Impacto: contagem dos indicadores =================
+const countIO = new IntersectionObserver(
+  (entries) => entries.forEach((e) => {
+    if (!e.isIntersecting) return;
+    countIO.unobserve(e.target);
+    const el = e.target;
+    const end = Number(el.dataset.count);
+    const dur = 1600;
+    let t0 = 0;
+    const step = (now) => {
+      t0 ||= now;
+      const p = Math.min(1, (now - t0) / dur);
+      el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }),
+  { threshold: 0.6 }
+);
+if (!reduceMotion) document.querySelectorAll("[data-count]").forEach((el) => { el.textContent = "0"; countIO.observe(el); });
 
 // ================= Filtro de projetos =================
 const filterBtns = document.querySelectorAll(".tag-btn");
